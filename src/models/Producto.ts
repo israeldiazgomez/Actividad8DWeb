@@ -6,13 +6,13 @@ export class Producto extends Model {
     public descripcion!: string;
     public precio!: number;
     public numero_existencia!: number;
-    public estado!: boolean;
+    public status!: boolean;
 }
 export interface ProductoI {
     descripcion: string;
     precio: number;
     numero_existencia: number;
-    estado: boolean;
+    status: boolean;
 }
 Producto.init (
     {
@@ -28,7 +28,7 @@ Producto.init (
             type: DataTypes.INTEGER,
             allowNull: false
         },
-        estado: {
+        status: {
             type: DataTypes.ENUM,
             values:['Activado','Desactivado'],
             defaultValue: 'Activado',

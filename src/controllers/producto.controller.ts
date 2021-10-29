@@ -4,19 +4,16 @@ import { Producto, ProductoI } from "../models/Producto"
 
 export class ProductoController {
     public async getProductos(req: Request, res: Response){
+    
         try {
-            const productos = await Producto.findAll(
-                {
-                    where:{estado: "Activado" }
-                }
-            )
+            const productos = await Producto.findAll()
             if(!productos){
-                res.status(400).json({msg: 'USARIOS INVALIDO'})
+                res.status(400).json({msg: 'Cliente invalido'})
             }
+    
             return res.status(200).json({productos})
-        }catch (error){ 
-            res.status(500).json({msg: 'ERROR DETECTADO POR FAVOR REGRESE'})
-
+        } catch (error) {
+            res.status(500).json({msg: "Sin conexion con la base de datos"})
         }
     }
     public async createProducto(req: Request, res: Response){
@@ -74,7 +71,7 @@ export class ProductoController {
              descripcion,
              precio,
              numero_existencia,
-             estado
+             status
             } = req.body;
      
           try {
@@ -82,7 +79,7 @@ export class ProductoController {
                 descripcion,
                 precio,
                 numero_existencia,
-                estado
+                status
              }
              const ProductoExist: ProductoI | null = await Producto.findByPk(pk)
 
@@ -109,7 +106,7 @@ export class ProductoController {
 
           await Producto.update(
               {
-                  estado:"Desactivado"
+                  status:"Desactivado"
               },
                   {
                       where: {id:pk}
