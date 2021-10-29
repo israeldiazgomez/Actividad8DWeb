@@ -23,7 +23,8 @@ export class App {
         this.app.use(express.urlencoded({extended: false}));
     }
     private routes(){
-        this.routePrv.clienteRoutes.routes(this.app)
+        this.routePrv.proveedoreRoutes.routes(this.app)
+        this.routePrv.distribuidoRoutes.routes(this.app)
     }
     async listen(){
         await this.app.listen(this.app.get('port'));
