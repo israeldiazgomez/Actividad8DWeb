@@ -8,5 +8,6 @@ export class ClienteRoutes{
         app.route('/cliente').get(this.clienteController.getClientes)
         app.route('/cliente').post(this.clienteController.crearClientes)
         app.route('/cliente').delete(this.clienteController.eliminarCliente)
+        app.route('/cliente/:id').patch(this.clienteController.updateCliente);
     }
 }
