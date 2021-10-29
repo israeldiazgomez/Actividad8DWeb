@@ -22,11 +22,11 @@ export class DistribuidoController{
       
     }
 
-    public mostrarDistribuidoss(){
+    public mostrarDistribuidos(){
         
     }
     public async crearDistribuido(req:Request, res:Response){
-        // const body: ClienteI = req.body 
+
         const {
              id,
             cantidad,
