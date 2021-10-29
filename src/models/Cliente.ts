@@ -15,7 +15,6 @@ export interface ClienteI {
     correo: string;
     clave: string;
 }
-
 Cliente.init (
     {
         nombre: {
