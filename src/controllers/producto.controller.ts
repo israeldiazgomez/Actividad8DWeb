@@ -1,10 +1,15 @@
+
 import { Request, Response } from "express";
-import { Producto, ProductoI } from '../models/Producto';
+import { Producto, ProductoI } from "../models/Producto"
 
 export class ProductoController {
     public async getProductos(req: Request, res: Response){
         try {
-            const productos = await Producto.findAll()
+            const productos = await Producto.findAll(
+                {
+                    where:{estado: "Activado" }
+                }
+            )
             if(!productos){
                 res.status(400).json({msg: 'USARIOS INVALIDO'})
             }
@@ -39,7 +44,7 @@ export class ProductoController {
             }
     }
 
-    public async borrarProducto(req: Request, res: Response){
+    public async deleteProducto(req: Request, res: Response){
         try {
 
             const { id } = req.body;
@@ -60,5 +65,62 @@ export class ProductoController {
           } catch (e) {
             console.log(e);
           }
-    }  
+    }
+
+    public async updateProducto(req: Request, res:Response){
+        const { id: pk } = req.params;
+         const {
+             id,
+             descripcion,
+             precio,
+             numero_existencia,
+             estado
+            } = req.body;
+     
+          try {
+             let body: ProductoI = {
+                descripcion,
+                precio,
+                numero_existencia,
+                estado
+             }
+             const ProductoExist: ProductoI | null = await Producto.findByPk(pk)
+
+
+            await Producto.update(
+                body,
+                {
+                where: {id: pk}  
+                }
+             )
+            const producto: ProductoI | null = await Producto.findByPk(pk)
+            res.status(200).json({producto})  
+            } catch (error) {
+            return res.status(500).json({msg : 'error internal'})
+             }
+        }
+
+    public async borrarProducto(req: Request, res: Response){
+        const {id:pk}= req.params;
+        try {
+            const ProductoExist: ProductoI | null = await Producto.findByPk(pk);
+
+          if (!ProductoExist) return res.status(500).json({msg: ' no existe'})
+
+          await Producto.update(
+              {
+                  estado:"Desactivado"
+              },
+                  {
+                      where: {id:pk}
+                  }
+              
+          );
+          return res.status(200).json({msg: ' fue eliminado'})
+
+        } catch (error) {
+            
+        }
+    }
+    
 }
