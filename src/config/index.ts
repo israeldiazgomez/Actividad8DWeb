@@ -26,6 +26,7 @@ export class App {
         this.routePrv.proveedoreRoutes.routes(this.app)
         this.routePrv.distribuidoRoutes.routes(this.app)
         this.routePrv.productoRoutes.routes(this.app)
+        this.routePrv.clientesRoutes.routes(this.app)
     }
     async listen(){
         await this.app.listen(this.app.get('port'));
