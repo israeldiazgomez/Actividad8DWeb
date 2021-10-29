@@ -9,3 +9,10 @@ export class Cliente extends Model {
     public clave!: string;
 }
 
+export interface ClienteI {
+    nombre: string;
+    apellido: string;
+    correo: string;
+    clave: string;
+}
+
