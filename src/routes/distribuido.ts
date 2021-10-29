@@ -6,10 +6,10 @@ export class DistribuidoRoutes{
     public routes(app:Application): void{
 
 
-        app.route('/proveedore').get(this.distribuidoController.getDistribuido);
-        app.route('/proveedore').post(this.distribuidoController.crearDistribuido);
-        app.route('/proveedore/:id').patch(this.distribuidoController.updateDistribuido);
-        app.route('/eproveedore/:id').patch(this.distribuidoController.deleteDistribuido) ;        
+        app.route('/distribuido').get(this.distribuidoController.getDistribuido);
+        app.route('/distribuido').post(this.distribuidoController.crearDistribuido);
+        app.route('/distribuido/:id').patch(this.distribuidoController.updateDistribuido);
+        app.route('/edistribuido/:id').patch(this.distribuidoController.deleteDistribuido) ;        
 
         
     }
