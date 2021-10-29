@@ -66,4 +66,69 @@ export class ClienteController {
           }
     };
 
+
+    public async  updateCliente(req: Request, res:Response){
+        const { id: pk } = req.params;
+         const {
+             id,
+             nombre,
+             apellido,
+             correo,
+             clave,
+             status
+            } = req.body;
+     
+            try {
+             let body: ClienteI = {
+                 nombre,
+                 apellido,
+                 correo,
+                 clave,
+                 status
+             }
+     
+             const ClienteExist:ClienteI | null = await Cliente.findByPk(pk)
+     
+             if(!ClienteExist) return res.status(400).json({msg: "El cliente no existe"})
+     
+             await Cliente.update(
+                 body,
+                 {
+                     where: {id: pk}
+                 }
+             )
+     
+             const cliente: ClienteI | null = await Cliente.findByPk(pk)
+             res.status(200).json({cliente})      
+         } catch (error) {
+             res.status(400).json({msg: "Error conexion"})
+            }
+        
+        }
+         
+        public async borrarCliente(req: Request, res:Response){
+           
+         const { id: pk } = req.params;
+         try {
+             const ClienteExist:ClienteI | null = await Cliente.findByPk(pk)
+     
+             if(!ClienteExist) return res.status(400).json({msg: "El Cliente no existe"})
+     
+             await Cliente.update(
+                 {
+                     status: "Desactivado"
+                 },
+                     {
+                         where: {id: pk}
+                     }
+             )
+     
+             res.status(200).json({msg: "Cliente Borrado"})
+     
+           } catch (error) {
+               
+           }
+        }
+     
+
 }
