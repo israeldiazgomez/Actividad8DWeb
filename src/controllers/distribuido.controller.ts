@@ -99,7 +99,7 @@ export class DistribuidoController{
                     }
                 
             );
-            return res.status(200).json({msg: ' fue eliminado'})
+               res.status(200).json({msg: ' fue eliminado'})
 
           } catch (error) {
               
