@@ -65,20 +65,22 @@ export class ClienteController {
         try {
     
             const { id } = req.body;
-        
+            const clienteExist: Cliente | null = await Cliente.findOne(
+                {
+                    where: {id:id}
+                }
+            );
+        if(clienteExist){
+            return res.status(400).json({msg: "Correo ya existe!!"})
+        }
+
             const response = await Cliente.destroy({
               where: { id: id }
             })
-            .then( function(data){
-              const res = { success: true, data: data, message:"Deleted successful" }
-              return res;
-            })
-            .catch(error => {
-              const res = { success: false, error: error }
-              return res;
-            })
-            res.json(response);
-        
+
+            res.status(200).json({msg: "Borrado!!"})
+            res.json(response)
+            
           } catch (e) {
             console.log(e);
           }
