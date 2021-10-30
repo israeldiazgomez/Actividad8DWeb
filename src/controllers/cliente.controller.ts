@@ -20,9 +20,27 @@ export class ClienteController {
     }
 
     public async crearClientes(req: Request, res:Response){
-        const body: ClienteI = req.body;
+       // const body: ClienteI = req.body;
         
         try {
+
+            const {
+                id,
+                nombre,
+                apellido,
+                correo,
+                clave,
+                status
+            } = req.body
+
+            let body: ClienteI = {
+                nombre,
+                apellido,
+                correo,
+                clave,
+                status
+            }
+
             if(!body.nombre && !body.apellido && 
             !body.correo && !body.clave) return res.status(400).json({msg: "Requieren datos!!"});
     
