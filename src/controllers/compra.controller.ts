@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { Compra } from '../models/Compra';
-import { CompraI} from '../models/Compra'
+import { CompraI} from '../models/Compra';
 
 export class CompraController {
     
@@ -18,20 +18,82 @@ export class CompraController {
     }
 
     public async createCompra(req:Request, res: Response){
-        const body: CompraI = req.body
-        try {
-            if((!body.fecha )) return res.status(400).json({msg:'Se requieren datos'});
-            
-            const fech: Compra | null = await Compra.findOne(   {where: {fecha: body.fecha},
-            }
-           );
+        //const body: CompraI = req.body
+        const {
+            id,
+            fecha,
+            status
+       } = req.body 
 
-         const compra = await Compra.create(body);
-         res.status(200).json({compra});
+       try {
 
-          } catch (error) {
-            
+           let body : CompraI = {
+               fecha,
+               status
+           }
+           
+           if((!body.fecha)) return res.status(400).json({msg:'ingrese datos'});
+           const fech : Compra | null = await Compra.findOne({where: { fecha : body.fecha}});
+
+           const compra = await Compra.create(body);
+           res.status(200).json({compra});
+
+       } catch (error){
+   
+       }
+  }
+
+  public async updateCompra(req: Request, res: Response){
+    const {id : pk} = req.params;
+    const {
+        id,
+        fecha,
+        status
+   } = req.body 
+
+  try {
+      
+    let body : CompraI = {
+        fecha,
+        status
+    }
+    const CompraExist: CompraI | null = await Compra.findByPk(pk)
+    if (!CompraExist)return res.status(500).json({msg: ' no existe'})
+
+    await Compra.update(
+        body,
+        {
+          where: {id: pk}  
         }
+    )
+    const compra: CompraI | null = await Compra.findByPk(pk)
+    res.status(200).json({compra})  
+  } catch (error) {
+      return res.status(500).json({msg : 'error interno'})
+  }
 
+  }
+
+  public async deleteCompra(req: Request, res: Response){
+    const {id:pk}= req.params;
+    try {
+        const CompraExist: CompraI | null = await Compra.findByPk(pk);
+
+      if (!CompraExist) return res.status(500).json({msg: ' no existe'})
+
+      await Compra.update(
+          {
+            status:"Desactivado"
+          },
+              {
+                  where: {id:pk}
+              }
+          
+      );
+      return res.status(200).json({msg: ' fue eliminado'})
+
+    } catch (error) {
+        
+    }
   }
 }

@@ -5,6 +5,8 @@ export class CompraRoutes {
     public compraController: CompraController = new CompraController();
     public routes(app: Application): void{
         app.route('/compra').get(this.compraController.getCompras);
-        app.route('/createCompra').post(this.compraController.createCompra);
+        app.route('/compra').post(this.compraController.createCompra);
+        app.route('/compra/:id').patch(this.compraController.updateCompra);
+        app.route('/borrarcompra/:id').patch(this.compraController.deleteCompra); 
     }
 }
