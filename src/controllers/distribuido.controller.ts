@@ -3,23 +3,36 @@ import {Distribuido, DistribuidoI} from "../models/Distribuido"
 
 
 export class DistribuidoController{
-    public async getDistribuido(req: Request, res: Response){
+    // public async getDistribuido(req: Request, res: Response){
 
-      try {
-          const distribuidos = await Distribuido.findAll(
-              {
-                  where:{estado: "Activado" }
-              }
-          )
-          if(!distribuidos){
-              res.status(400).json({msg:'No existe'})
-          }
-          return res.status(200).json({distribuidos})
-      }
-      catch(error) {
-          res.status(500).json({msg:'No hay conexion'})
-      }
+    //   try {
+    //       const distribuidos = await Distribuido.findAll(
+    //           {
+    //               where:{estado: "Activado" }
+    //           }
+    //       )
+    //       if(!distribuidos){
+    //           res.status(400).json({msg:'No existe'})
+    //       }
+    //       return res.status(200).json({distribuidos})
+    //   }
+    //   catch(error) {
+    //       res.status(500).json({msg:'No hay conexion'})
+    //   }
       
+    // }
+    public async getDistribuido(req: Request, res: Response){
+    
+        try {
+            const distribuidos = await Distribuido.findAll()
+            if(!distribuidos){
+                res.status(400).json({msg: ' invalido'})
+            }
+    
+            return res.status(200).json({distribuidos})
+        } catch (error) {
+            res.status(500).json({msg: "Sin conexion con la base de datos"})
+        }
     }
 
     public mostrarDistribuidos(){

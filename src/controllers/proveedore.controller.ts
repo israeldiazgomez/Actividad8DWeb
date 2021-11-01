@@ -3,23 +3,36 @@ import {Proveedore, ProveedoreI} from "../models/Proveedore";
 
 
 export class ProveedoreController{
-    public async getProveedore(req: Request, res: Response){
+    // public async getProveedore(req: Request, res: Response){
 
-      try {
-          const proveedores = await Proveedore.findAll(
-              {
-                  where:{estado: "Activado" }
-              }
-          )
-          if(!proveedores){
-              res.status(400).json({msg:'No existe'})
-          }
-          return res.status(200).json({proveedores})
-      }
-      catch(error) {
-          res.status(500).json({msg:'No hay conexion'})
-      }
+    //   try {
+    //       const proveedores = await Proveedore.findAll(
+    //           {
+    //               where:{estado: "Activado" }
+    //           }
+    //       )
+    //       if(!proveedores){
+    //           res.status(400).json({msg:'No existe'})
+    //       }
+    //       return res.status(200).json({proveedores})
+    //   }
+    //   catch(error) {
+    //       res.status(500).json({msg:'No hay conexion'})
+    //   }
       
+    // }
+    public async getProveedore(req: Request, res: Response){
+    
+        try {
+            const proveedores = await Proveedore.findAll()
+            if(!proveedores){
+                res.status(400).json({msg: 'Proveedor invalido'})
+            }
+    
+            return res.status(200).json({proveedores})
+        } catch (error) {
+            res.status(500).json({msg: "Sin conexion con la base de datos"})
+        }
     }
 
     public mostrarProveedores(){
