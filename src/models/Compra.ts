@@ -5,12 +5,12 @@ import {Producto} from './Producto'
 
 export class Compra extends Model {
     public fecha!: Date;
-    public estado! : boolean;
+    public status!: boolean;
 }
 
 export interface CompraI {
     fecha: Date;
-    estado: boolean;
+    status: boolean;
 }
 
 Compra.init (
@@ -19,11 +19,11 @@ Compra.init (
             type: DataTypes.DATE,
             allowNull: false
         },
-        estado: {
-            type:DataTypes.ENUM,
-            values:['Activado', 'Desactivado'],
+        status: {
+            type: DataTypes.ENUM,
+            values:['Activado','Desactivado'],
             defaultValue: 'Activado',
-            allowNull:false
+            allowNull: false
         },
     },
 
